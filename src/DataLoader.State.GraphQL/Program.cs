@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.AddNpgsqlDbContext<BloggingContext>("db");
+builder.Services.AddCors(x =>
+    x.AddDefaultPolicy(y => y.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
 builder.Services
     .AddGraphQLServer()
@@ -21,6 +23,7 @@ var app = builder.Build();
 
 await app.Seed();
 
+app.UseCors();
 app.MapGraphQL();
 
 await app.RunAsync();

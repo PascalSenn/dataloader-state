@@ -65,7 +65,7 @@ public static partial class BlogType
             See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.",
     */
     [UsePaging]
-    public static async Task<Connection<Post>> GetPostsProjected(
+    public static async Task<Connection<Post>> GetPostsProjectedAndPaged(
         [Parent("BlogId")] Blog blog,
         IBlogBatchingContext batching,
         PagingArguments arguments,
@@ -87,7 +87,7 @@ public static partial class BlogType
 
     */
     [UsePaging]
-    public static async Task<Connection<Post>> GetPostsFiltered(
+    public static async Task<Connection<Post>> GetPostsFilteredAndPaged(
         [Parent("BlogId")] Blog blog,
         IBlogBatchingContext batching,
         PagingArguments arguments,
@@ -100,9 +100,9 @@ public static partial class BlogType
             .ToConnectionAsync();
     }
 
-    /// also doesnt wor
+    /// Also does not work
     [UsePaging]
-    public static async Task<Connection<Post>> GetPostsFilteredAndProject(
+    public static async Task<Connection<Post>> GetPostsFilteredAndProjectedAndPaged(
         [Parent("BlogId")] Blog blog,
         IBlogBatchingContext batching,
         PagingArguments arguments,
@@ -117,7 +117,7 @@ public static partial class BlogType
             .ToConnectionAsync();
     }
 
-
+    /// This works
     public static async Task<Post[]?> GetPostsFiltered(
         [Parent("BlogId")] Blog blog,
         IBlogBatchingContext batching,
@@ -125,6 +125,6 @@ public static partial class BlogType
     {
         return await batching.PostsFiltered
             .Where(x => x.Title.Contains("GraphQL"))
-            .LoadAsync(blog.BlogId, cancellationToken)
+            .LoadAsync(blog.BlogId, cancellationToken);
     }
 }
