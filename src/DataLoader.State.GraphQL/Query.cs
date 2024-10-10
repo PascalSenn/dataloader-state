@@ -43,11 +43,13 @@ public static partial class BlogType
         [Parent("BlogId")] Blog blog,
         IBlogBatchingContext batching,
         PagingArguments arguments,
+        ISelection selection,
         CancellationToken cancellationToken)
     {
         return await batching.PostsByBlogId
             .Where(x => x.Title.Contains("GraphQL"))
             .WithPagingArguments(arguments)
+            .Select(selection)
             .LoadAsync(blog.BlogId, cancellationToken)
             .ToConnectionAsync();
     }

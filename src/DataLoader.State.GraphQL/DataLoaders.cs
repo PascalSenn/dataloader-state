@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using GreenDonut;
 using GreenDonut.Projections;
 using HotChocolate.Data;
+using HotChocolate.Data.Sorting;
 using HotChocolate.Pagination;
+using HotChocolate.Resolvers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLoader.State.Example;
@@ -41,10 +43,12 @@ public static class DataLoaders
         BloggingContext context,
         PagingArguments arguments,
         [DataLoaderState("where")] Expression<Func<Post, bool>> where,
+        ISelectorBuilder selector,
         CancellationToken cancellationToken) =>
         await context.Posts
             .Where(x => keys.Contains(x.BlogId))
             .Where(where)
             .OrderBy(x => x.PostId)
+            .Select(x => x.BlogId, selector)
             .ToBatchPageAsync(x => x.BlogId, arguments, cancellationToken);
 }

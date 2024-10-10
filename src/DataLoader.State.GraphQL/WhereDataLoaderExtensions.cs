@@ -26,13 +26,6 @@ public static class WhereDataLoaderExtensions
             return dataLoader;
         }
 
-        // if (dataLoader is ISelectionDataLoader<TKey, TValue>)
-        // {
-        //     var context = (DefaultSelectorBuilder)dataLoader.ContextData[typeof(ISelectorBuilder).FullName!]!;
-        //     context.Add(selector);
-        //     return dataLoader;
-        // }
-
         var branchKey = where.ToString();
         return (IDataLoader<TKey, TValue>)dataLoader.Branch(branchKey, CreateBranch, where);
 
@@ -65,13 +58,6 @@ public static class WhereDataLoaderExtensions
             return dataLoader;
         }
 
-        // if (dataLoader is ISelectionDataLoader<TKey, TValue>)
-        // {
-        //     var context = (DefaultSelectorBuilder)dataLoader.ContextData[typeof(ISelectorBuilder).FullName!]!;
-        //     context.Add(selector);
-        //     return dataLoader;
-        // }
-
         var branchKey = where.ToString();
         return (IDataLoader<TKey, Page<TValue>>)dataLoader.Branch(branchKey, CreateBranch, where);
 
@@ -103,13 +89,6 @@ public static class WhereDataLoaderExtensions
         {
             return dataLoader;
         }
-
-        // if (dataLoader is ISelectionDataLoader<TKey, TValue>)
-        // {
-        //     var context = (DefaultSelectorBuilder)dataLoader.ContextData[typeof(ISelectorBuilder).FullName!]!;
-        //     context.Add(selector);
-        //     return dataLoader;
-        // }
 
         var branchKey = where.ToString();
         return (IDataLoader<TKey, TValue[]>)dataLoader.Branch(branchKey, CreateBranch, where);
